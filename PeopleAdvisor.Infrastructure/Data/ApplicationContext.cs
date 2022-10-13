@@ -10,6 +10,7 @@ public class ApplicationContext : DbContext
     }
 
     public DbSet<Profile>? Profiles { get; set; }
+    public DbSet<Experience>? Experiences { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
