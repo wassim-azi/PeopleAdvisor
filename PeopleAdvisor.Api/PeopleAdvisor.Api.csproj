@@ -47,4 +47,8 @@
     <Folder Include="Options" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PeopleAdvisor.Infrastructure\PeopleAdvisor.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,10 @@
-# Postgresql & PgAdmin powered by compose
+# PeopleAdvisor
+
+## Migrations
+
+> dotnet ef migrations add CreateProject --context ApplicationContext
+
+> dotnet ef database update --context ApplicationContext
 
 ## Requirements
 

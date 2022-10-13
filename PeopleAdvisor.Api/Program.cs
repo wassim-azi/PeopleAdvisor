@@ -4,12 +4,16 @@ using System.Reflection;
 using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using PeopleAdvisor.Api.Common;
 using PeopleAdvisor.Api.Middlewares;
+using PeopleAdvisor.Infrastructure;
+using PeopleAdvisor.Infrastructure.Data;
 
 const string CORS_POLICY = "CorsPolicy";
+var assemblyName = Assembly.GetExecutingAssembly().GetName().Name;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -119,14 +123,20 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "PeopleAdvisor",
         Version = "v1",
-        Description = "PeopleAdvisor to HirePeople"
+        Description = "PeopleAdvisor by HirePeople"
     });
 
     // Set the comments path for the Swagger JSON and UI.
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlFile = $"{assemblyName}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     options.IncludeXmlComments(xmlPath);
 });
+
+builder.Services.AddDbContext<ApplicationContext>(options =>
+    options.UseNpgsql(builder.Configuration["ConnectionString"], optionsAction =>
+        optionsAction.MigrationsAssembly(assemblyName)));
+
+builder.Services.AddInfrastructure(builder.Configuration);
 
 #endregion
 

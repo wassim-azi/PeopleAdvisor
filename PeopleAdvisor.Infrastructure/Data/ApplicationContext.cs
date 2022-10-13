@@ -13,11 +13,10 @@ public class ApplicationContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // https://stackoverflow.com/a/32859508
-        // modelBuilder.Configurations.Add(new TestEntity1Configuration());
-        // modelBuilder.Configurations.Add(new TestEntity2Configuration());
-
         base.OnModelCreating(modelBuilder);
+
+        // A new extension method, ApplyConfigurationsFromAssembly, was introduced which scans a given
+        // assembly for all types that implement IEntityTypeConfiguration, and registers each one automatically.
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly);
     }
 }
